@@ -19,14 +19,14 @@ func bubbleSort<T: Comparable>(targets: [T], expression: ((_ lhs: T, _ rhs: T) -
     return result
 }
 
-
+/* Utilities **/
 func randomIndex(from count: Int) -> Int {
     let tmp = Int(arc4random() % UInt32( max(count, 1)))
     return max(tmp - 1, 0)
 }
 
 func makeRamdomUniqueIntArray(count: Int) -> [Int] {
-    let range = Array((0...count))
+    let range = Array((0..<count))
     var arr = range
     var result: [Int] = []
     range.forEach { _ in
@@ -36,16 +36,27 @@ func makeRamdomUniqueIntArray(count: Int) -> [Int] {
     return result
 }
 
-let targets = makeRamdomUniqueIntArray(count: 30)
+func measure(target: (() -> ())) {
+    let start = Date()
+    target()
+    print(Date().timeIntervalSince(start))
+}
+
+
+
+
+let targets = makeRamdomUniqueIntArray(count: 100)
 //print(targets)
-var start = Date()
-let hoge = bubbleSort(targets: targets) {$0 < $1 }
-print("BubbleSort", Date().timeIntervalSince(start))
-//print(hoge)
 
-start = Date()
-let foo = targets.sorted()
-print("Sort of the standard library", Date().timeIntervalSince(start))
-//print(foo)
+print("BubbleSort")
+measure {
+    let hoge = bubbleSort(targets: targets) { $0 < $1 }
+    //print(hoge)
+}
 
+print("Sort of the standard library")
+measure {
+    let foo = targets.sorted()
+    //print(foo)
+}
 
