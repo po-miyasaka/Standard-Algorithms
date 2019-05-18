@@ -1,17 +1,16 @@
 import Foundation
 
 
-// Arrayだとinsert処理が重い
 func insertionSort<T: Comparable>(targets: [T], expression: ((_ lhs: T, _ rhs: T) -> Bool)) -> [T] {
     
     let targetsCount = targets.count
     var result: [T] = [targets[0]]
-    parent: for currentTargetIndex in (1 ..< targetsCount) { // 対象のArray分回す
+    parent: for currentTargetIndex in (1 ..< targetsCount) {
         let currentTarget = targets[currentTargetIndex]
         
         for insertIndex in 0 ..< result.count {
             if !expression(result[insertIndex], currentTarget) {
-              result.insert(currentTarget, at: insertIndex)
+              result.insert(currentTarget, at: insertIndex) // 重い
             continue parent
             }
         }
@@ -21,28 +20,6 @@ func insertionSort<T: Comparable>(targets: [T], expression: ((_ lhs: T, _ rhs: T
     }
     return result
 }
-
-func insertionSortWithList<T: Comparable>(targets: [T], expression: ((_ lhs: T, _ rhs: T) -> Bool)) -> [T] {
-    
-    let targetsCount = targets.count
-    var result: [T] = [targets[0]]
-    parent: for currentTargetIndex in (1 ..< targetsCount) { // 対象のArray分回す
-        let currentTarget = targets[currentTargetIndex]
-        
-        for insertIndex in 0 ..< result.count {
-            if !expression(result[insertIndex], currentTarget) {
-                result.insert(currentTarget, at: insertIndex)
-                continue parent
-            }
-        }
-        result.append(currentTarget)
-        
-    }
-    return result
-}
-
-
-
 
 /* Utilities **/
 func randomIndex(from count: Int) -> Int {
