@@ -9,7 +9,7 @@ func selectionSort<T: Comparable>(targets: [T], expression: ((_ lhs: T, _ rhs: T
         var tmpIndex: Int?
         var candidate: T = result[currentTargetIndex]
 
-        for index in currentTargetIndex ..< targetsCount where result[index] > candidate {
+        for index in currentTargetIndex ..< targetsCount where expression(result[index], candidate) {
               candidate = result[index]
               tmpIndex = index
         }
